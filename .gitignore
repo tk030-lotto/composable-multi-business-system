@@ -39,22 +39,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# database
-*.db
-*.db-journal
-
-# backups (財務データを含むため、誤ってコミットしないよう除外)
-/backups/
-backup-*.json
-accounts-*.csv
-journal_entries-*.csv
-audit_logs-*.csv
-
-# ai_pipeline
-ai_pipeline/result.json
-ai_pipeline/test_report.md
-ai_pipeline/log.md
-ai_pipeline/development_chat_history.md
-
-/src/generated/prisma

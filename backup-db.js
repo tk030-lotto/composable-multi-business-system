@@ -7,7 +7,7 @@ const readline = require('readline');
 // Ensure the path is correct relative to where the script is run
 // In Next.js with Prisma, the sqlite db is usually at prisma/dev.db if we use file:./dev.db in .env
 // Wait, in src/lib/prisma.ts it uses file:./dev.db, so we do the same
-const adapter = new PrismaBetterSqlite3({ url: "file:./dev.db" });
+const adapter = new PrismaBetterSqlite3({ url: 'file:./dev.db' });
 const prisma = new PrismaClient({ adapter });
 
 const BACKUP_DIR = path.join(__dirname, 'backups');
@@ -27,7 +27,7 @@ function getTimestamp() {
 
 // Convert string dates back to Date objects for Prisma
 function parseDates(items, dateFields) {
-  return items.map(item => {
+  return items.map((item) => {
     const newItem = { ...item };
     for (const field of dateFields) {
       if (newItem[field]) {
@@ -42,21 +42,23 @@ function parseDates(items, dateFields) {
 function toCSV(data) {
   if (!data || data.length === 0) return '';
   const headers = Object.keys(data[0]);
-  const rows = data.map(row => {
-    return headers.map(header => {
-      let val = row[header];
-      if (val === null || val === undefined) val = '';
-      if (val instanceof Date) val = val.toISOString();
-      if (typeof val === 'string') {
-        // Escape quotes
-        val = val.replace(/"/g, '""');
-        // Wrap in quotes if it contains comma, newline or quotes
-        if (val.includes(',') || val.includes('\n') || val.includes('"')) {
-          val = `"${val}"`;
+  const rows = data.map((row) => {
+    return headers
+      .map((header) => {
+        let val = row[header];
+        if (val === null || val === undefined) val = '';
+        if (val instanceof Date) val = val.toISOString();
+        if (typeof val === 'string') {
+          // Escape quotes
+          val = val.replace(/"/g, '""');
+          // Wrap in quotes if it contains comma, newline or quotes
+          if (val.includes(',') || val.includes('\n') || val.includes('"')) {
+            val = `"${val}"`;
+          }
         }
-      }
-      return val;
-    }).join(',');
+        return val;
+      })
+      .join(',');
   });
   return [headers.join(','), ...rows].join('\n');
 }
@@ -114,7 +116,9 @@ async function doRestore(filename, force) {
   if (!filename) {
     filename = findLatestJsonBackup();
     if (!filename) {
-      console.error('Error: backups/ 内にJSONバックアップが見つかりません。--file <filename> で指定してください。');
+      console.error(
+        'Error: backups/ 内にJSONバックアップが見つかりません。--file <filename> で指定してください。'
+      );
       process.exit(1);
     }
     console.log(`--file 未指定のため、最新のバックアップを使用します: ${filename}`);
@@ -131,14 +135,17 @@ async function doRestore(filename, force) {
   if (!force) {
     const rl = readline.createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
-    
-    const answer = await new Promise(resolve => {
-      rl.question('WARNING: This will completely replace the current database with the backup data. All existing data will be lost. Are you sure? (y/N): ', resolve);
+
+    const answer = await new Promise((resolve) => {
+      rl.question(
+        'WARNING: This will completely replace the current database with the backup data. All existing data will be lost. Are you sure? (y/N): ',
+        resolve
+      );
     });
     rl.close();
-    
+
     if (answer.toLowerCase() !== 'y') {
       console.log('Restore aborted.');
       process.exit(0);
@@ -157,13 +164,22 @@ async function doRestore(filename, force) {
 
   // Parse dates
   const accounts = parseDates(data.accounts || [], ['created_at', 'updated_at', 'deleted_at']);
-  const journalEntries = parseDates(data.journal_entries || [], ['date', 'created_at', 'updated_at', 'deleted_at']);
+  const journalEntries = parseDates(data.journal_entries || [], [
+    'date',
+    'created_at',
+    'updated_at',
+    'deleted_at',
+  ]);
   const auditLogs = parseDates(data.audit_logs || [], ['created_at']);
 
   console.log('Temporarily dropping audit triggers...');
   const triggers = [
-    'trigger_audit_account_insert', 'trigger_audit_account_update', 'trigger_audit_account_delete',
-    'trigger_audit_journal_entry_insert', 'trigger_audit_journal_entry_update', 'trigger_audit_journal_entry_delete'
+    'trigger_audit_account_insert',
+    'trigger_audit_account_update',
+    'trigger_audit_account_delete',
+    'trigger_audit_journal_entry_insert',
+    'trigger_audit_journal_entry_update',
+    'trigger_audit_journal_entry_delete',
   ];
   for (const trigger of triggers) {
     await prisma.$executeRawUnsafe(`DROP TRIGGER IF EXISTS ${trigger}`);
@@ -209,7 +225,7 @@ async function doRestore(filename, force) {
 async function main() {
   const args = process.argv.slice(2);
   const command = args[0];
-  
+
   if (!command || (command !== 'backup' && command !== 'restore')) {
     console.log('Usage:');
     console.log('  node backup-db.js backup [--format json|csv]');
@@ -222,11 +238,11 @@ async function main() {
   let force = false;
 
   for (let i = 1; i < args.length; i++) {
-    if (args[i] === '--format' && args[i+1]) {
-      format = args[i+1].toLowerCase();
+    if (args[i] === '--format' && args[i + 1]) {
+      format = args[i + 1].toLowerCase();
       i++;
-    } else if (args[i] === '--file' && args[i+1]) {
-      file = args[i+1];
+    } else if (args[i] === '--file' && args[i + 1]) {
+      file = args[i + 1];
       i++;
     } else if (args[i] === '--force') {
       force = true;

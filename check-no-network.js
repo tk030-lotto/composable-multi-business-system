@@ -93,7 +93,9 @@ if (!fs.existsSync(TARGET_DIR)) {
 const isViolationFound = scanDirectory(TARGET_DIR);
 
 if (isViolationFound) {
-  console.error('\nERROR: External network communication detected. Build aborted (V3 isolation requirement).');
+  console.error(
+    '\nERROR: External network communication detected. Build aborted (V3 isolation requirement).'
+  );
   process.exit(1);
 } else {
   console.log('\nSUCCESS: No external network communication detected. V3 isolation check passed.');
