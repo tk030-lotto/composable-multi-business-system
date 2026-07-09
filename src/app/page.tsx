@@ -7,6 +7,7 @@ export default function Home() {
     { name: '売上管理', path: '/plugins/sales' },
     { name: '発注・仕入管理', path: '/plugins/procurement' },
     { name: '在庫・商品管理', path: '/plugins/inventory' },
+    { name: '決済・消込管理', path: '/plugins/finance' },
   ];
 
   return (
