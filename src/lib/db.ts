@@ -9,6 +9,9 @@ const connectionString = process.env.DATABASE_URL || '';
 const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);
 
+export const query = (text: string, params?: unknown[]) => pool.query(text, params);
+export const getClient = () => pool.connect();
+
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
