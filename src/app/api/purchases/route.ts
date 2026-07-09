@@ -111,6 +111,7 @@ export async function POST(request: NextRequest) {
       RETURNING *
     `;
     const insertOrderParams = [
+      purchase_no,
       supplier_name,
       status || 'ORDERED',
       expense_status || 'UNPAID',
