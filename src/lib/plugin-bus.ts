@@ -36,4 +36,10 @@ class PluginBus {
 }
 
 const pluginBus = new PluginBus();
+
+import { registerInventoryPlugin } from '@/plugins/inventory/server';
+
+// 本来はモードなどによって出し分けるが、実証のためすべて登録
+registerInventoryPlugin(pluginBus);
+
 export default pluginBus;
