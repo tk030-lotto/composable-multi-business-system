@@ -54,7 +54,7 @@ export default function ProcurementPage() {
     setError(null);
     try {
       const res = await fetch('/api/purchases');
-      if (!res.ok) throw new Error('仕入データの取得に失敗しました。');
+      if (!res.ok) throw new Error('発注データの取得に失敗しました。');
       const data = await res.json();
       if (data.success) {
         setPurchaseOrders(data.data);
@@ -118,11 +118,11 @@ export default function ProcurementPage() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formPurchaseDate) {
-      setFormError('仕入日（発注日）は必須です。');
+      setFormError('発注日は必須です。');
       return;
     }
     if (!formSupplierName) {
-      setFormError('仕入先名は必須です。');
+      setFormError('発注先名は必須です。');
       return;
     }
     if (formItems.length === 0) {
@@ -204,14 +204,14 @@ export default function ProcurementPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', width: '100%' }}>
       <section className="stats-grid">
         <div className="stat-card">
-          <div className="stat-label">仕入伝票数</div>
+          <div className="stat-label">発注伝票数</div>
           <div className="stat-value">{isLoading ? '...' : purchaseOrders.length}</div>
           <div className="stat-change up">
             <span>📄</span> 登録済み伝票
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-label">仕入合計金額</div>
+          <div className="stat-label">発注合計金額</div>
           <div className="stat-value">
             {isLoading
               ? '...'
@@ -225,9 +225,9 @@ export default function ProcurementPage() {
 
       <section className="content-card">
         <div className="card-header-flex">
-          <h2 className="card-title-sub">仕入データ一覧</h2>
+          <h2 className="card-title-sub">発注データ一覧</h2>
           <button type="button" className="btn-primary" onClick={openCreateModal}>
-            + 新規仕入登録
+            + 新規発注登録
           </button>
         </div>
 
@@ -246,7 +246,7 @@ export default function ProcurementPage() {
           ) : purchaseOrders.length === 0 ? (
             <div className="empty-state">
               <span>📭</span>
-              <p>該当する仕入データが見つかりませんでした。</p>
+              <p>該当する発注データが見つかりませんでした。</p>
             </div>
           ) : (
             <table className="mock-table">
@@ -254,7 +254,7 @@ export default function ProcurementPage() {
                 <tr>
                   <th>伝票番号</th>
                   <th>日付</th>
-                  <th>仕入先名</th>
+                  <th>発注先名</th>
                   <th>合計金額</th>
                   <th>ステータス</th>
                   <th>操作</th>
@@ -273,7 +273,7 @@ export default function ProcurementPage() {
                       <span
                         className={`status-badge ${order.status === 'ORDERED' ? 'status-new' : 'status-completed'}`}
                       >
-                        {order.status === 'ORDERED' ? '発注済 (仮仕入)' : '受領済 (入荷済)'}
+                        {order.status === 'ORDERED' ? '発注済 (未入荷)' : '受領済 (入荷済)'}
                       </span>
                     </td>
                     <td>
@@ -310,7 +310,7 @@ export default function ProcurementPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="modal-header">
-              <h2>{editingOrder ? `仕入編集: ${editingOrder.purchase_no}` : '新規仕入登録'}</h2>
+              <h2>{editingOrder ? `発注編集: ${editingOrder.purchase_no}` : '新規発注登録'}</h2>
               <button type="button" className="close-btn" onClick={() => setIsModalOpen(false)}>
                 &times;
               </button>
@@ -339,7 +339,7 @@ export default function ProcurementPage() {
                   </div>
                   <div className="form-group">
                     <label className="form-label">
-                      仕入先名 <span className="required-star">*</span>
+                      発注先名 <span className="required-star">*</span>
                     </label>
                     <input
                       type="text"
@@ -359,7 +359,7 @@ export default function ProcurementPage() {
                     onChange={(e) => setFormStatus(e.target.value)}
                     className="form-select"
                   >
-                    <option value="ORDERED">発注済 (仮仕入)</option>
+                    <option value="ORDERED">発注済 (未入荷)</option>
                     <option value="RECEIVED">受領済 (入荷済)</option>
                   </select>
                 </div>
@@ -374,7 +374,7 @@ export default function ProcurementPage() {
                     }}
                   >
                     <label className="form-label" style={{ margin: 0 }}>
-                      仕入明細 <span className="required-star">*</span>
+                      発注明細 <span className="required-star">*</span>
                     </label>
                     <button
                       type="button"
