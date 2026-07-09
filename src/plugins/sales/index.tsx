@@ -275,7 +275,7 @@ export default function SalesPage() {
                       <span
                         className={`status-badge ${order.status === 'ORDERED' ? 'status-new' : 'status-completed'}`}
                       >
-                        {order.status === 'ORDERED' ? '受注済 (未発送)' : '発送済 (売上確定)'}
+                        {order.status === 'ORDERED' ? '受注済 (仮売上)' : '売上確定 (受領書回収)'}
                       </span>
                     </td>
                     <td>
@@ -358,8 +358,8 @@ export default function SalesPage() {
                     onChange={(e) => setFormStatus(e.target.value)}
                     className="form-select"
                   >
-                    <option value="ORDERED">受注済 (未発送)</option>
-                    <option value="SHIPPED">発送済 (売上確定)</option>
+                    <option value="ORDERED">受注済 (仮売上)</option>
+                    <option value="SHIPPED">売上確定 (受領書回収)</option>
                     <option value="CANCELLED">キャンセル</option>
                   </select>
                 </div>
