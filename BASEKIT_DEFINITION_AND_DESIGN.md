@@ -138,6 +138,7 @@ export interface IDatabaseManager {
 ## 4. 認証プロバイダ抽象化設計
 
 運用要件（ID/パスワード認証、JWTによる外部システム連携、OAuth、ソーシャル認証等）に応じて、認証ロジックを差し替え可能とする。
+また、本システムはプラグインの集合体であるため、**認証画面（ログインUI）は各プラグインが保持し、COREは認証と権限判定のロジック（バックエンド）のみを提供する**という完全な責任分離アーキテクチャを採用する。
 
 ### 4.1. 認証プロバイダインターフェース (`IAuthProvider`)
 
@@ -145,14 +146,18 @@ export interface IDatabaseManager {
 export interface UserSessionContext {
   userId: string;
   email: string;
-  role: 'admin' | 'member' | string;
+  isSystemAdmin: boolean;
+  pluginRoles: Record<string, 'MANAGER' | 'USER' | 'NONE'>; // 各プラグインに対する権限
   expiresAt: Date | null;
   rawPayload?: any; // 各種認証方式における追加の認証トークンデータ
 }
 
 export interface IAuthProvider {
-  // 認証情報の検証と標準セッションの取得
+  // プラグインから渡された認証情報の検証と標準セッションの取得
   validateCredentials(credentials: any): Promise<UserSessionContext>;
+
+  // ユーザーが特定のプラグインにアクセスする権限があるかを判定
+  verifyPluginAccess(context: UserSessionContext, pluginId: string): boolean;
   // セッション有効性のチェック
   validateSession(tokenOrSessionId: string): Promise<boolean>;
   // セッションの破棄（ログアウト）
