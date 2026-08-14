@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# マルチ業務システム (Composable Multi-Business System)
 
-## Getting Started
+> ⚠️ **Status: Intentionally Frozen (開発凍結 / アーカイブ)**  
+> 本リポジトリは、「開発に失敗した」のではなく、実用性と開発優先度を冷静に再評価した結果として**「意図的に開発を凍結」**したプロジェクトです。
+>
+> 開発の背景、凍結を決断した理由、そして後続の「BaseKit」構想へと至る開発思考の系譜については、以下のnote記事に詳しく記録しています。  
+> 👉 **[note開発ストーリー: なぜ私はマルチ業務システム構想を凍結したのか](https://note.com/zero_ai_dev/n/n0c66381001f5)**
 
-First, run the development server:
+---
+
+## 📌 概要 (Overview)
+
+「マルチ業務システム」は、小規模事業者や個人の業務を一元管理することを目指して構想された統合型Webアプリケーションです。
+
+当初は以下の業務領域を網羅する包括的なプラットフォームとして設計されていました：
+
+- **顧客管理 (CRM)**: 取引先・顧客情報の統合管理
+- **売上・請求管理**: 売上伝票の起票、請求書発行
+- **仕入・発注管理**: 仕入先管理、発注書・入荷の追跡
+- **在庫管理**: 入出庫・適正在庫のトラッキング
+- **見積管理**: 見積書作成・ステータス管理
+- **決済管理**: 入金・支払のステータス管理
+
+---
+
+## 💡 なぜ凍結したのか (Why It Was Frozen)
+
+> **「作れること」と「作るべきこと」は違う。**
+
+1. **実用性の再評価**  
+   包括的なシステムを構築する技術的検証は進んだものの、「実際に自分自身が日々の業務で今すぐ使うか？」を問い直した結果、個人業務においてここまでの多機能スイートは過剰であると判断しました。
+
+2. **真に必要なものへのフォーカス**  
+   巨大なシステムを抱え込むのではなく、「個人業務効率化ツール」「業務用SNS」「複式簿記」といった真に価値のある単機能・特化型ツールへ焦点を絞る方向へシフトしました。
+
+3. **BaseKitへの系譜**  
+   本プロジェクトでのコンポーザブル設計やデータ構造の試行錯誤は、後に続くモジュール型基盤「BaseKit」等のアーキテクチャへと確実に引き継がれています。
+
+---
+
+## 🛠 技術スタック (Tech Stack)
+
+- **Framework**: Next.js (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS / Vanilla CSS
+- **Runtime**: Node.js
+
+---
+
+## 🚀 ローカル起動方法 (Getting Started)
+
+本プロジェクトの画面・コンポーネント構成を確認するための起動手順です。
 
 ```bash
+# 依存パッケージのインストール
+npm install
+
+# 開発サーバーの起動
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+ブラウザで `http://localhost:3000` にアクセスしてください。
