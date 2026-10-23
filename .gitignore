@@ -60,3 +60,9 @@ GEMINI.md
 # 開発ドキュメント除外（フェーズ2-B）
 コンポーザブル_マルチ業務システム計画書.md
 .roorules
+
+# サブディレクトリ内AIルールファイル除外（フェーズ2-B-δ）
+**/.clauderules
+**/.clinerules
+**/.copilotinstructions
+**/.github/copilot-instructions.md
