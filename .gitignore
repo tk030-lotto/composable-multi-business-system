@@ -66,4 +66,6 @@ GEMINI.md
 **/.clinerules
 **/.copilotinstructions
 **/.github/copilot-instructions.md
-`n# 仕様書除外（フェーズ2-C-β）`nPLUGIN_IMPLEMENTATION_SPECIFICATION.md
+
+# 仕様書除外（フェーズ2-C-β）
+PLUGIN_IMPLEMENTATION_SPECIFICATION.md
