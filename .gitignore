@@ -69,3 +69,6 @@ GEMINI.md
 
 # 仕様書除外（フェーズ2-C-β）
 PLUGIN_IMPLEMENTATION_SPECIFICATION.md
+
+# 設計書・開発ガイド除外（フェーズ2-C-γ）
+BASEKIT_DEFINITION_AND_DESIGN.md
